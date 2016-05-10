@@ -4,11 +4,20 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class Data {
+public class Project {
 
+    private String imagesDirectory;
     private Integer startFrameIdx;
     private Integer endFrameIdx;
     private Map<Integer, FrameData> frameData = new HashMap<Integer, FrameData>();
+
+    public String getImagesDirectory() {
+        return imagesDirectory;
+    }
+
+    public void setImagesDirectory(String imagesDirectory) {
+        this.imagesDirectory = imagesDirectory;
+    }
 
     public FrameData getFrameData(int frameIdx) {
         return frameData.get(frameIdx);
@@ -33,7 +42,7 @@ public class Data {
     public void addFrameData(int currentFrameIdx, FrameData frame) {
         frameData.put(currentFrameIdx, frame);
     }
-    
+
     public Set<Integer> getFrameDataIdxs() {
         return frameData.keySet();
     }

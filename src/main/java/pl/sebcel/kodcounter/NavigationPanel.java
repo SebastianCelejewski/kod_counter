@@ -29,7 +29,7 @@ public class NavigationPanel extends JPanel {
     private JButton lastFrame = new JButton("Last");
 
     private int numberOfFrames = 0;
-    private Data data;
+    private Project project;
     private int currentFrameIdx = 0;
 
     public NavigationPanel() {
@@ -58,8 +58,8 @@ public class NavigationPanel extends JPanel {
         });
         startFrame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (data.getStartFrameIdx() != null) {
-                    setFrameIdx(data.getStartFrameIdx());
+                if (project.getStartFrameIdx() != null) {
+                    setFrameIdx(project.getStartFrameIdx());
                 }
             }
         });
@@ -95,8 +95,8 @@ public class NavigationPanel extends JPanel {
         });
         endFrame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if (data.getEndFrameIdx() != null) {
-                    setFrameIdx(data.getEndFrameIdx());
+                if (project.getEndFrameIdx() != null) {
+                    setFrameIdx(project.getEndFrameIdx());
                 }
             }
         });
@@ -111,8 +111,8 @@ public class NavigationPanel extends JPanel {
         this.mainFrame = mainFrame;
     }
 
-    public void setData(Data data) {
-        this.data = data;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     public void setNumberOfFrames(int numberOfFrames) {

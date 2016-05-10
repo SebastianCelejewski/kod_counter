@@ -1,6 +1,8 @@
 package pl.sebcel.kodcounter;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 
 import javax.swing.BoxLayout;
@@ -19,15 +21,13 @@ public class MainFrame extends JFrame {
     private JPanel infoPanel = new JPanel();
     private NavigationPanel navigationPanel = new NavigationPanel();
     private DataPanel dataPanel = new DataPanel();
+    private MainMenu mainMenu = new MainMenu();
 
-    private Data data = new Data();
+    private Project project = new Project();
 
     public static void main(String[] args) {
-
         MainFrame mainFrame = new MainFrame();
         mainFrame.setBounds(100, 100, 1920 / 2, 1080 / 2);
-        mainFrame.init("c:\\Users\\Sebastian\\Desktop\\kod-2");
-
         mainFrame.setVisible(true);
     }
 
@@ -35,22 +35,33 @@ public class MainFrame extends JFrame {
         infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
         infoPanel.add(navigationPanel);
         infoPanel.add(dataPanel);
-        navigationPanel.setMainFrame(this);
 
-        setLayout(new BorderLayout());
-        add(label, BorderLayout.CENTER);
-        add(infoPanel, BorderLayout.NORTH);
+        navigationPanel.setMainFrame(this);
+        mainMenu.setMainFrame(this);
+
+        this.setLayout(new BorderLayout());
+        this.setJMenuBar(mainMenu);
+        this.add(label, BorderLayout.CENTER);
+        this.add(infoPanel, BorderLayout.NORTH);
+
+        this.setTitle("KOD Counter");
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+        });
     }
 
-    public void init(String directoryPath) {
+    public void initProject(String directoryPath) {
         File directory = new File(directoryPath);
         files = directory.listFiles();
         idx = 100;
 
         navigationPanel.setNumberOfFrames(files.length);
-        data = new Data();
-        dataPanel.setData(data);
-        navigationPanel.setData(data);
+        project = new Project();
+        dataPanel.setProject(project);
+        navigationPanel.setProject(project);
 
         repaint();
     }
