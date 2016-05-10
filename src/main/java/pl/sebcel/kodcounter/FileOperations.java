@@ -6,6 +6,7 @@ import java.io.FileWriter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 public class FileOperations {
 
@@ -14,6 +15,7 @@ public class FileOperations {
             JAXBContext context = JAXBContext.newInstance(Project.class);
             Marshaller marshaller = context.createMarshaller();
             ByteArrayOutputStream out = new ByteArrayOutputStream();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             marshaller.marshal(project, out);
 
             out.close();
@@ -25,12 +27,24 @@ public class FileOperations {
 
     public void saveProject(File file, Project project) {
         try {
-            String serializedProject = new FileOperations().serializeProject(project);
+            String serializedProject = serializeProject(project);
             FileWriter out = new FileWriter(file, false);
             out.write(serializedProject);
             out.close();
         } catch (Exception ex) {
             throw new RuntimeException("Failed to save file: " + ex.getMessage(), ex);
+        }
+    }
+
+    public Project loadProject(File file) {
+        try {
+            JAXBContext context = JAXBContext.newInstance(Project.class);
+            Unmarshaller unmarshaller = context.createUnmarshaller();
+            Project project = (Project) unmarshaller.unmarshal(file);
+            return project;
+
+        } catch (Exception ex) {
+            throw new RuntimeException("Failed to load file: " + ex.getMessage(), ex);
         }
     }
 }

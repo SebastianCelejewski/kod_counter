@@ -57,7 +57,7 @@ public class MainFrame extends JFrame {
     public void initProject(String directoryPath) {
         File directory = new File(directoryPath);
         files = directory.listFiles();
-        idx = 100;
+        idx = 0;
 
         navigationPanel.setNumberOfFrames(files.length);
         project = new Project();
@@ -70,6 +70,21 @@ public class MainFrame extends JFrame {
 
     public void saveProject(File file) {
         fileOperations.saveProject(file, project);
+    }
+
+    public void openProject(File file) {
+        project = fileOperations.loadProject(file);
+
+        File directory = new File(project.getImagesDirectory());
+        files = directory.listFiles();
+        idx = 0;
+
+        navigationPanel.setNumberOfFrames(files.length);
+
+        dataPanel.setProject(project);
+        navigationPanel.setProject(project);
+
+        repaint();
     }
 
     public void repaint() {

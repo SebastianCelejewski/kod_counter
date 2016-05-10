@@ -74,6 +74,7 @@ public class DataPanel extends JPanel {
 
     public void setProject(Project project) {
         this.project = project;
+        refreshView();
     }
 
     public void setFrameIdx(int frameIdx) {

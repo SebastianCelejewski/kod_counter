@@ -1,7 +1,5 @@
 package pl.sebcel.kodcounter;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JFileChooser;
@@ -29,28 +27,13 @@ public class MainMenu extends JMenuBar {
         menuFile.add(menuFileSave);
         menuFile.add(menuFileSaveAs);
         menuFile.add(menuFileClose);
+
         this.add(menuFile);
 
-        menuFileNew.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                newProject();
-            }
-        });
-
-        menuFileSaveAs.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveProjectAs();
-            }
-        });
-
-        menuFileSave.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveProject();
-            }
-        });
+        menuFileNew.addActionListener(e -> newProject());
+        menuFileSaveAs.addActionListener(e -> saveProjectAs());
+        menuFileSave.addActionListener(e -> saveProject());
+        menuFileOpen.addActionListener(e -> openProject());
     }
 
     public void setMainFrame(MainFrame mainFrame) {
@@ -81,6 +64,13 @@ public class MainMenu extends JMenuBar {
             saveProjectAs();
         } else {
             mainFrame.saveProject(new File(projectFilename));
+        }
+    }
+    
+    private void openProject() {
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showOpenDialog(MainMenu.this) == JFileChooser.APPROVE_OPTION) {
+            mainFrame.openProject(fileChooser.getSelectedFile());
         }
     }
 }

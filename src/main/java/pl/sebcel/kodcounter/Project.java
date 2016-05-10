@@ -4,22 +4,27 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Project {
 
+    @XmlElement
     private String imagesDirectory;
 
+    @XmlElement
     private Integer startFrameIdx;
 
+    @XmlElement
     private Integer endFrameIdx;
 
     @XmlElement
     private Map<Integer, FrameData> frameData = new HashMap<Integer, FrameData>();
 
-    @XmlElement
     public String getImagesDirectory() {
         return imagesDirectory;
     }
@@ -40,12 +45,10 @@ public class Project {
         this.endFrameIdx = endFrameIdx;
     }
 
-    @XmlElement
     public Integer getStartFrameIdx() {
         return startFrameIdx;
     }
 
-    @XmlElement
     public Integer getEndFrameIdx() {
         return endFrameIdx;
     }
