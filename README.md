@@ -12,12 +12,10 @@ To calculate number of participants:
 - For some frames (the more the better) calculate number of people that crossed the reference plane.
 - An application will automatically assess the total number of people
 
-Example 1.
-A lantern is very good reference plane.
+*Example 1.* A lantern is very good reference plane.
 
 ![Example 1](https://raw.githubusercontent.com/SebastianCelejewski/kod_counter/master/doc/KOD_counter_01.JPG)
 
-Example 2
-There is no good candidate for a reference plane. Moreover, the poor quality of the movie clip does not allow to calculate number of people that crossed the reference plane.
+*Example 2.* There is no good candidate for a reference plane. Moreover, the poor quality of the movie clip does not allow to calculate number of people that crossed the reference plane.
 
 ![Example 2](https://raw.githubusercontent.com/SebastianCelejewski/kod_counter/master/doc/KOD_counter_02.JPG)
