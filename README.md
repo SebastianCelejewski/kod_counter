@@ -6,7 +6,7 @@ To calculate number of participants:
 - Download a movie clip (e.g. from YouTube)
 - Convert a movie clip into a series of frames (e.g. PNG files)
 - Run KOD Counter
-- Select a reference plane you will use for calculations. It has to be an object visible on all frames. See a lantern on an example 1.
+- Select a reference plane you will use for calculations. It has to be an object visible on all frames.
 - Locate a frame where the head of the march crosses the reference plane and set is as a first data frame.
 - Locate a frame where the tail of the march crosses the reference plane and set it as a last data frame.
 - For some frames (the more the better) calculate number of people that crossed the reference plane.
