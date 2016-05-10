@@ -47,6 +47,7 @@ public class MainMenu extends JMenuBar {
         if (fileChooser.showDialog(MainMenu.this, "Select images directory") == JFileChooser.APPROVE_OPTION) {
             String selectedDirectory = fileChooser.getSelectedFile().getAbsolutePath();
             mainFrame.initProject(selectedDirectory);
+            projectFilename = null;
         }
     }
 
@@ -66,11 +67,12 @@ public class MainMenu extends JMenuBar {
             mainFrame.saveProject(new File(projectFilename));
         }
     }
-    
+
     private void openProject() {
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(MainMenu.this) == JFileChooser.APPROVE_OPTION) {
             mainFrame.openProject(fileChooser.getSelectedFile());
+            projectFilename = fileChooser.getSelectedFile().getAbsolutePath();
         }
     }
 }
