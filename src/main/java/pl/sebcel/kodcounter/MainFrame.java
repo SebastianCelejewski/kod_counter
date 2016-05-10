@@ -22,6 +22,7 @@ public class MainFrame extends JFrame {
     private NavigationPanel navigationPanel = new NavigationPanel();
     private DataPanel dataPanel = new DataPanel();
     private MainMenu mainMenu = new MainMenu();
+    private FileOperations fileOperations = new FileOperations();
 
     private Project project = new Project();
 
@@ -60,10 +61,15 @@ public class MainFrame extends JFrame {
 
         navigationPanel.setNumberOfFrames(files.length);
         project = new Project();
+        project.setImagesDirectory(directoryPath);
         dataPanel.setProject(project);
         navigationPanel.setProject(project);
 
         repaint();
+    }
+
+    public void saveProject(File file) {
+        fileOperations.saveProject(file, project);
     }
 
     public void repaint() {
@@ -76,5 +82,9 @@ public class MainFrame extends JFrame {
         this.idx = frameIdx;
         dataPanel.setFrameIdx(frameIdx);
         repaint();
+    }
+
+    public Project getProject() {
+        return project;
     }
 }
