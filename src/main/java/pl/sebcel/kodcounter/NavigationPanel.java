@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 public class NavigationPanel extends JPanel {
 
@@ -20,8 +20,7 @@ public class NavigationPanel extends JPanel {
     private JButton left100 = new JButton("<<<");
     private JButton left10 = new JButton("<<");
     private JButton left1 = new JButton("<");
-    private JTextField currentFrame = new JTextField();
-    private JLabel totalFramewLabel = new JLabel();
+    private JLabel frameInfoLabel = new JLabel();
     private JButton right1 = new JButton(">");
     private JButton right10 = new JButton(">>");
     private JButton right100 = new JButton(">>>");
@@ -33,23 +32,21 @@ public class NavigationPanel extends JPanel {
     private int currentFrameIdx = 0;
 
     public NavigationPanel() {
+        setBorder(new TitledBorder("Navigation"));
+
         add(firstFrame);
         add(startFrame);
         add(left100);
         add(left10);
         add(left1);
-        add(new JLabel("Frame "));
-        add(currentFrame);
-        add(new JLabel(" of "));
-        add(totalFramewLabel);
+        add(frameInfoLabel);
         add(right1);
         add(right10);
         add(right100);
         add(endFrame);
         add(lastFrame);
 
-        currentFrame.setPreferredSize(new Dimension(50, 21));
-        totalFramewLabel.setPreferredSize(new Dimension(50, 21));
+        frameInfoLabel.setPreferredSize(new Dimension(120, 21));
 
         firstFrame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -117,8 +114,7 @@ public class NavigationPanel extends JPanel {
 
     public void setNumberOfFrames(int numberOfFrames) {
         this.numberOfFrames = numberOfFrames;
-        this.totalFramewLabel.setText(Integer.toString(numberOfFrames));
-        this.currentFrame.setText(Integer.toString(currentFrameIdx));
+        this.frameInfoLabel.setText("Frame " + currentFrameIdx + " of " + numberOfFrames);
     }
 
     private void setFrameIdx(int frameIdx) {
@@ -130,7 +126,7 @@ public class NavigationPanel extends JPanel {
             currentFrameIdx = numberOfFrames - 1;
         }
         mainFrame.setFrameIdx(currentFrameIdx);
-        this.currentFrame.setText(Integer.toString(currentFrameIdx));
+        this.frameInfoLabel.setText("Frame " + currentFrameIdx + " of " + numberOfFrames);
         this.repaint();
     }
 
@@ -143,7 +139,7 @@ public class NavigationPanel extends JPanel {
             currentFrameIdx = numberOfFrames - 1;
         }
         mainFrame.setFrameIdx(currentFrameIdx);
-        this.currentFrame.setText(Integer.toString(currentFrameIdx));
+        this.frameInfoLabel.setText("Frame " + currentFrameIdx + " of " + numberOfFrames);
         this.repaint();
     }
 }

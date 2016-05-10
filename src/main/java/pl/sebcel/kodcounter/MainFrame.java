@@ -1,6 +1,8 @@
 package pl.sebcel.kodcounter;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.File;
@@ -28,7 +30,9 @@ public class MainFrame extends JFrame {
 
     public static void main(String[] args) {
         MainFrame mainFrame = new MainFrame();
-        mainFrame.setBounds(100, 100, 1920 / 2, 1080 / 2);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        mainFrame.setSize(1000, 750);
+        mainFrame.setLocation((screenSize.width - 1000) / 2, (screenSize.height - 750) / 2);
         mainFrame.setVisible(true);
     }
 

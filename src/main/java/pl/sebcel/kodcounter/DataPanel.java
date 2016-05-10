@@ -11,36 +11,31 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.TitledBorder;
 
 public class DataPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
     private Project project;
-    private JLabel frameIdxLabel = new JLabel();
     private JTextField peopleFlowField = new JTextField();
     private JButton setStartFrame = new JButton("Set as start frame");
     private JButton setEndFrame = new JButton("Set as end frame");
-    private JLabel startFrameLabel = new JLabel();
-    private JLabel endFrameLabel = new JLabel();
+    private JLabel dataLabel = new JLabel();
 
     private int currentFrameIdx;
 
     public DataPanel() {
-        add(new JLabel("Frame idx: "));
-        add(frameIdxLabel);
-        add(new JLabel("People flow: "));
+        setBorder(new TitledBorder("Data panel"));
+
+        add(new JLabel("Denoted people: "));
         add(peopleFlowField);
         add(setStartFrame);
         add(setEndFrame);
-        add(new JLabel("Start frame idx: "));
-        add(startFrameLabel);
-        add(new JLabel("End frame idx: "));
-        add(endFrameLabel);
+        add(dataLabel);
 
         peopleFlowField.setPreferredSize(new Dimension(50, 21));
-        startFrameLabel.setPreferredSize(new Dimension(50, 21));
-        endFrameLabel.setPreferredSize(new Dimension(50, 21));
+        dataLabel.setPreferredSize(new Dimension(500, 21));
 
         setStartFrame.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -79,7 +74,6 @@ public class DataPanel extends JPanel {
 
     public void setFrameIdx(int frameIdx) {
         currentFrameIdx = frameIdx;
-        frameIdxLabel.setText(Integer.toString(frameIdx));
         refreshView();
     }
 
@@ -91,11 +85,29 @@ public class DataPanel extends JPanel {
         } else {
             peopleFlowField.setText("");
         }
-        if (project.getStartFrameIdx() != null) {
-            startFrameLabel.setText(Integer.toString(project.getStartFrameIdx()));
-        }
-        if (project.getEndFrameIdx() != null) {
-            endFrameLabel.setText(Integer.toString(project.getEndFrameIdx()));
+
+        if (project.getStartFrameIdx() != null && project.getEndFrameIdx() != null) {
+            int startFrameIdx = project.getStartFrameIdx();
+            int endFrameIdx = project.getEndFrameIdx();
+
+            int totalPeopleFlow = 0;
+            int dataFrames = 0;
+
+            for (Integer frameIdx : project.getFrameDataIdxs()) {
+                if (frameIdx >= startFrameIdx && frameIdx < endFrameIdx) {
+                    frameData = project.getFrameData(frameIdx);
+                    dataFrames += 1;
+                    totalPeopleFlow += frameData.getPeopleFlow();
+                }
+            }
+
+            int estimatedTotalPeople = (int) (totalPeopleFlow * (new Double(endFrameIdx - startFrameIdx) / new Double(dataFrames)));
+
+            String dataText = "Analysed frames: " + dataFrames;
+            dataText += ", people denoted: " + totalPeopleFlow;
+            dataText += ", estimated number of people: " + estimatedTotalPeople;
+
+            dataLabel.setText(dataText);
         }
     }
 
@@ -108,36 +120,5 @@ public class DataPanel extends JPanel {
 
         frameData.setPeopleFlow(peopleFlow);
         refreshView();
-
-        calculateResults();
-    }
-
-    private void calculateResults() {
-        if (project.getStartFrameIdx() == null) {
-            System.out.println("You have to set start frame first");
-            return;
-        }
-
-        if (project.getEndFrameIdx() == null) {
-            System.out.println("You have to set end frame first");
-        }
-
-        int startFrameIdx = project.getStartFrameIdx();
-        int endFrameIdx = project.getEndFrameIdx();
-
-        int totalPeopleFlow = 0;
-        int dataFrames = 0;
-
-        for (Integer frameIdx : project.getFrameDataIdxs()) {
-            if (frameIdx >= startFrameIdx && frameIdx < endFrameIdx) {
-                dataFrames += 1;
-                FrameData frameData = project.getFrameData(frameIdx);
-                totalPeopleFlow += frameData.getPeopleFlow();
-            }
-        }
-
-        System.out.println("Frames range length: " + (endFrameIdx - startFrameIdx));
-        System.out.println("Data frames count: " + dataFrames);
-        System.out.println("Total people flow: " + totalPeopleFlow);
     }
 }
