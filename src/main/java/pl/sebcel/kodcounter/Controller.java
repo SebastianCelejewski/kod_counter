@@ -6,20 +6,22 @@ import java.io.File;
 
 public class Controller {
 
-    private Project project = new Project();
-    private FileOperations fileOperations = new FileOperations();
-    
+    private Project project;
+    private FileOperations fileOperations;
+
     private NavigationPanel navigationPanel;
     private DataPanel dataPanel;
     private FrameDisplay frameDisplay;
     private MainMenu mainMenu;
     private MainFrame mainFrame;
-    
+
     public static void main(String[] args) {
         new Controller();
     }
-    
+
     public Controller() {
+        fileOperations = new FileOperations();
+
         navigationPanel = new NavigationPanel();
         dataPanel = new DataPanel();
         frameDisplay = new FrameDisplay();
@@ -27,13 +29,14 @@ public class Controller {
         navigationPanel.setController(this);
         mainMenu.setController(this);
 
-        mainFrame = new MainFrame(navigationPanel, dataPanel, frameDisplay, mainMenu);
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        mainFrame.setSize(1000, 750);
-        mainFrame.setLocation((screenSize.width - 1000) / 2, (screenSize.height - 750) / 2);
+        Dimension frameSize = new Dimension(1000, 750);
+        mainFrame = new MainFrame(navigationPanel, dataPanel, frameDisplay, mainMenu);
+        mainFrame.setSize(frameSize);
+        mainFrame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
         mainFrame.setVisible(true);
     }
-    
+
     public void initProject(String directoryPath) {
         File directory = new File(directoryPath);
         File[] files = directory.listFiles();
@@ -68,7 +71,7 @@ public class Controller {
 
         mainFrame.repaint();
     }
-    
+
     public void setFrameIdx(int frameIdx) {
         frameDisplay.setFrameIdx(frameIdx);
         dataPanel.setFrameIdx(frameIdx);
