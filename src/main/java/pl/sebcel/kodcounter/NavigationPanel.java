@@ -13,7 +13,7 @@ public class NavigationPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
 
-    private MainFrame mainFrame;
+    private Controller controller;
 
     private JButton firstFrame = new JButton("First");
     private JButton startFrame = new JButton("Start");
@@ -104,8 +104,8 @@ public class NavigationPanel extends JPanel {
         });
     }
 
-    public void setMainFrame(MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     public void setProject(Project project) {
@@ -125,7 +125,7 @@ public class NavigationPanel extends JPanel {
         if (currentFrameIdx >= numberOfFrames) {
             currentFrameIdx = numberOfFrames - 1;
         }
-        mainFrame.setFrameIdx(currentFrameIdx);
+        controller.setFrameIdx(currentFrameIdx);
         this.frameInfoLabel.setText("Frame " + currentFrameIdx + " of " + numberOfFrames);
         this.repaint();
     }
@@ -138,7 +138,7 @@ public class NavigationPanel extends JPanel {
         if (currentFrameIdx >= numberOfFrames) {
             currentFrameIdx = numberOfFrames - 1;
         }
-        mainFrame.setFrameIdx(currentFrameIdx);
+        controller.setFrameIdx(currentFrameIdx);
         this.frameInfoLabel.setText("Frame " + currentFrameIdx + " of " + numberOfFrames);
         this.repaint();
     }

@@ -18,7 +18,7 @@ public class MainMenu extends JMenuBar {
     private JMenuItem menuFileSaveAs = new JMenuItem("Save As");
     private JMenuItem menuFileClose = new JMenuItem("Close");
 
-    private MainFrame mainFrame;
+    private Controller controller;
     private String projectFilename;
 
     public MainMenu() {
@@ -36,8 +36,8 @@ public class MainMenu extends JMenuBar {
         menuFileOpen.addActionListener(e -> openProject());
     }
 
-    public void setMainFrame(MainFrame mainFrame) {
-        this.mainFrame = mainFrame;
+    public void setController(Controller controller) {
+        this.controller = controller;
     }
 
     private void newProject() {
@@ -46,7 +46,7 @@ public class MainMenu extends JMenuBar {
         fileChooser.setDialogTitle("Select directory containing set of images");
         if (fileChooser.showDialog(MainMenu.this, "Select images directory") == JFileChooser.APPROVE_OPTION) {
             String selectedDirectory = fileChooser.getSelectedFile().getAbsolutePath();
-            mainFrame.initProject(selectedDirectory);
+            controller.initProject(selectedDirectory);
             projectFilename = null;
         }
     }
@@ -56,7 +56,7 @@ public class MainMenu extends JMenuBar {
         if (fileChooser.showSaveDialog(MainMenu.this) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
             projectFilename = file.getAbsolutePath();
-            mainFrame.saveProject(file);
+            controller.saveProject(file);
         }
     }
 
@@ -64,14 +64,14 @@ public class MainMenu extends JMenuBar {
         if (projectFilename == null) {
             saveProjectAs();
         } else {
-            mainFrame.saveProject(new File(projectFilename));
+            controller.saveProject(new File(projectFilename));
         }
     }
 
     private void openProject() {
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(MainMenu.this) == JFileChooser.APPROVE_OPTION) {
-            mainFrame.openProject(fileChooser.getSelectedFile());
+            controller.openProject(fileChooser.getSelectedFile());
             projectFilename = fileChooser.getSelectedFile().getAbsolutePath();
         }
     }
