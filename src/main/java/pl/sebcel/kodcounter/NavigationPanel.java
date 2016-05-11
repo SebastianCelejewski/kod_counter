@@ -1,8 +1,6 @@
 package pl.sebcel.kodcounter;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -33,6 +31,7 @@ public class NavigationPanel extends JPanel {
 
     public NavigationPanel() {
         setBorder(new TitledBorder("Navigation"));
+        frameInfoLabel.setPreferredSize(new Dimension(120, 21));
 
         add(firstFrame);
         add(startFrame);
@@ -46,62 +45,16 @@ public class NavigationPanel extends JPanel {
         add(endFrame);
         add(lastFrame);
 
-        frameInfoLabel.setPreferredSize(new Dimension(120, 21));
-
-        firstFrame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setFrameIdx(0);
-            }
-        });
-        startFrame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (project.getStartFrameIdx() != null) {
-                    setFrameIdx(project.getStartFrameIdx());
-                }
-            }
-        });
-        left100.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateFrameIdx(-100);
-            }
-        });
-        left10.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateFrameIdx(-10);
-            }
-        });
-        left1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateFrameIdx(-1);
-            }
-        });
-        right1.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateFrameIdx(1);
-            }
-        });
-        right10.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateFrameIdx(10);
-            }
-        });
-        right100.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                updateFrameIdx(100);
-            }
-        });
-        endFrame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (project.getEndFrameIdx() != null) {
-                    setFrameIdx(project.getEndFrameIdx());
-                }
-            }
-        });
-        lastFrame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setFrameIdx(numberOfFrames - 1);
-            }
-        });
+        firstFrame.addActionListener(e -> setFrameIdx(0));
+        startFrame.addActionListener(e -> setFrameIdx(project.getStartFrameIdx()));
+        left100.addActionListener(e -> moveFrameIdx(-100));
+        left10.addActionListener(e -> moveFrameIdx(-10));
+        left1.addActionListener(e -> moveFrameIdx(-1));
+        right1.addActionListener(e -> moveFrameIdx(1));
+        right10.addActionListener(e -> moveFrameIdx(10));
+        right100.addActionListener(e -> moveFrameIdx(100));
+        endFrame.addActionListener(e -> setFrameIdx(project.getEndFrameIdx()));
+        lastFrame.addActionListener(e -> setFrameIdx(numberOfFrames - 1));
     }
 
     public void setController(Controller controller) {
@@ -117,7 +70,10 @@ public class NavigationPanel extends JPanel {
         this.frameInfoLabel.setText("Frame " + currentFrameIdx + " of " + numberOfFrames);
     }
 
-    private void setFrameIdx(int frameIdx) {
+    private void setFrameIdx(Integer frameIdx) {
+        if (frameIdx == null) {
+            return;
+        }
         currentFrameIdx = frameIdx;
         if (currentFrameIdx < 0) {
             currentFrameIdx = 0;
@@ -130,16 +86,7 @@ public class NavigationPanel extends JPanel {
         this.repaint();
     }
 
-    private void updateFrameIdx(int delta) {
-        currentFrameIdx += delta;
-        if (currentFrameIdx < 0) {
-            currentFrameIdx = 0;
-        }
-        if (currentFrameIdx >= numberOfFrames) {
-            currentFrameIdx = numberOfFrames - 1;
-        }
-        controller.setFrameIdx(currentFrameIdx);
-        this.frameInfoLabel.setText("Frame " + currentFrameIdx + " of " + numberOfFrames);
-        this.repaint();
+    private void moveFrameIdx(int delta) {
+        setFrameIdx(currentFrameIdx + delta);
     }
 }
