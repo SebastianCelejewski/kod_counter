@@ -7,7 +7,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class FrameDisplay extends JPanel {
+import pl.sebcel.kodcounter.events.NavigationListener;
+
+public class FrameDisplay extends JPanel implements NavigationListener {
 
     private static final long serialVersionUID = 1L;
 

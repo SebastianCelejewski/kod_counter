@@ -1,20 +1,20 @@
 package pl.sebcel.kodcounter.gui;
 
 import java.awt.Dimension;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
-import pl.sebcel.kodcounter.Controller;
 import pl.sebcel.kodcounter.domain.Project;
+import pl.sebcel.kodcounter.events.NavigationListener;
 
 public class NavigationPanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-
-    private Controller controller;
 
     private JButton firstFrame = new JButton("First");
     private JButton startFrame = new JButton("Start");
@@ -31,6 +31,8 @@ public class NavigationPanel extends JPanel {
     private int numberOfFrames = 0;
     private Project project;
     private int currentFrameIdx = 0;
+
+    private Set<NavigationListener> navigationListeners = new HashSet<>();
 
     public NavigationPanel() {
         setBorder(new TitledBorder("Navigation"));
@@ -60,12 +62,12 @@ public class NavigationPanel extends JPanel {
         lastFrame.addActionListener(e -> setFrameIdx(numberOfFrames - 1));
     }
 
-    public void setController(Controller controller) {
-        this.controller = controller;
-    }
-
     public void setProject(Project project) {
         this.project = project;
+    }
+
+    public void addNavigationListener(NavigationListener navigationListener) {
+        navigationListeners.add(navigationListener);
     }
 
     public void setNumberOfFrames(int numberOfFrames) {
@@ -84,7 +86,11 @@ public class NavigationPanel extends JPanel {
         if (currentFrameIdx >= numberOfFrames) {
             currentFrameIdx = numberOfFrames - 1;
         }
-        controller.setFrameIdx(currentFrameIdx);
+
+        for (NavigationListener navigationListener : navigationListeners) {
+            navigationListener.setFrameIdx(currentFrameIdx);
+        }
+
         this.frameInfoLabel.setText("Frame " + currentFrameIdx + " of " + numberOfFrames);
         this.repaint();
     }

@@ -34,7 +34,8 @@ public class Controller {
         dataPanel = new DataPanel();
         frameDisplay = new FrameDisplay();
         mainMenu = new MainMenu();
-        navigationPanel.setController(this);
+        navigationPanel.addNavigationListener(dataPanel);
+        navigationPanel.addNavigationListener(frameDisplay);
         mainMenu.setController(this);
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -66,11 +67,6 @@ public class Controller {
 
     public void saveProject(File file) {
         fileOperations.saveProject(file, project);
-    }
-
-    public void setFrameIdx(int frameIdx) {
-        frameDisplay.setFrameIdx(frameIdx);
-        dataPanel.setFrameIdx(frameIdx);
     }
 
     private void initializeGUI(File[] files) {

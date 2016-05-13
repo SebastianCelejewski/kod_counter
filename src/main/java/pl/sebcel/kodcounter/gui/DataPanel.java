@@ -2,8 +2,6 @@ package pl.sebcel.kodcounter.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -15,55 +13,45 @@ import javax.swing.border.TitledBorder;
 
 import pl.sebcel.kodcounter.domain.FrameData;
 import pl.sebcel.kodcounter.domain.Project;
+import pl.sebcel.kodcounter.events.NavigationListener;
 
-public class DataPanel extends JPanel {
+public class DataPanel extends JPanel implements NavigationListener {
 
     private static final long serialVersionUID = 1L;
 
-    private Project project;
-    private JTextField peopleFlowField = new JTextField();
-    private JButton setStartFrame = new JButton("Set as start frame");
-    private JButton setEndFrame = new JButton("Set as end frame");
-    private JLabel dataLabel = new JLabel();
+    private JTextField numberOfDenotedPeopleTextField = new JTextField();
+    private JButton setStartFrameButton = new JButton("Set as start frame");
+    private JButton setEndFrameButton = new JButton("Set as end frame");
+    private JLabel informationLabel = new JLabel();
 
+    private Project project;
     private int currentFrameIdx;
 
     public DataPanel() {
         setBorder(new TitledBorder("Data panel"));
 
         add(new JLabel("Denoted people: "));
-        add(peopleFlowField);
-        add(setStartFrame);
-        add(setEndFrame);
-        add(dataLabel);
+        add(numberOfDenotedPeopleTextField);
+        add(setStartFrameButton);
+        add(setEndFrameButton);
+        add(informationLabel);
 
-        peopleFlowField.setPreferredSize(new Dimension(50, 21));
-        dataLabel.setPreferredSize(new Dimension(500, 21));
+        numberOfDenotedPeopleTextField.setPreferredSize(new Dimension(50, 21));
+        informationLabel.setPreferredSize(new Dimension(500, 21));
 
-        setStartFrame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                project.setStartFrame(currentFrameIdx);
-                refreshView();
-            }
-        });
+        setStartFrameButton.addActionListener(e -> setStartFrame(currentFrameIdx));
+        setEndFrameButton.addActionListener(e -> setEndFrame(currentFrameIdx));
 
-        setEndFrame.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                project.setEndFrame(currentFrameIdx);
-                refreshView();
-            }
-        });
-
-        peopleFlowField.addKeyListener(new KeyAdapter() {
+        numberOfDenotedPeopleTextField.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     try {
-                        int peopleFlow = Integer.parseInt(peopleFlowField.getText());
-                        peopleFlowField.setBackground(Color.WHITE);
+                        int peopleFlow = Integer.parseInt(numberOfDenotedPeopleTextField.getText());
+                        numberOfDenotedPeopleTextField.setBackground(Color.WHITE);
                         setPeopleFlow(peopleFlow);
                     } catch (Exception ex) {
-                        peopleFlowField.setBackground(Color.RED);
+                        numberOfDenotedPeopleTextField.setBackground(Color.RED);
                     }
                 }
             }
@@ -80,13 +68,23 @@ public class DataPanel extends JPanel {
         refreshView();
     }
 
+    private void setStartFrame(int startFrameIdx) {
+        project.setStartFrame(currentFrameIdx);
+        refreshView();
+    }
+
+    private void setEndFrame(int endFrameIdx) {
+        project.setEndFrame(currentFrameIdx);
+        refreshView();
+    }
+
     private void refreshView() {
         FrameData frameData = project.getFrameData(currentFrameIdx);
-        peopleFlowField.setBackground(Color.WHITE);
+        numberOfDenotedPeopleTextField.setBackground(Color.WHITE);
         if (frameData != null) {
-            peopleFlowField.setText(Integer.toString(frameData.getPeopleFlow()));
+            numberOfDenotedPeopleTextField.setText(Integer.toString(frameData.getPeopleFlow()));
         } else {
-            peopleFlowField.setText("");
+            numberOfDenotedPeopleTextField.setText("");
         }
 
         if (project.getStartFrameIdx() != null && project.getEndFrameIdx() != null) {
@@ -110,7 +108,7 @@ public class DataPanel extends JPanel {
             dataText += ", people denoted: " + totalPeopleFlow;
             dataText += ", estimated number of people: " + estimatedTotalPeople;
 
-            dataLabel.setText(dataText);
+            informationLabel.setText(dataText);
         }
     }
 
