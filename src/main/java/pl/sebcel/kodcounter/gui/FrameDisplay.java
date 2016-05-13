@@ -1,4 +1,4 @@
-package pl.sebcel.kodcounter;
+package pl.sebcel.kodcounter.gui;
 
 import java.awt.BorderLayout;
 import java.io.File;

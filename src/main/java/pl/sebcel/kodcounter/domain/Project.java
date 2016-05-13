@@ -1,4 +1,4 @@
-package pl.sebcel.kodcounter;
+package pl.sebcel.kodcounter.domain;
 
 import java.util.HashMap;
 import java.util.Map;

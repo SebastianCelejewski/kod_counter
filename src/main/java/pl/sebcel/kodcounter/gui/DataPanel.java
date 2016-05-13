@@ -1,4 +1,4 @@
-package pl.sebcel.kodcounter;
+package pl.sebcel.kodcounter.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,6 +12,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import pl.sebcel.kodcounter.domain.FrameData;
+import pl.sebcel.kodcounter.domain.Project;
 
 public class DataPanel extends JPanel {
 

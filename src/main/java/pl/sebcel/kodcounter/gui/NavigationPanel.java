@@ -1,4 +1,4 @@
-package pl.sebcel.kodcounter;
+package pl.sebcel.kodcounter.gui;
 
 import java.awt.Dimension;
 
@@ -6,6 +6,9 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
+
+import pl.sebcel.kodcounter.Controller;
+import pl.sebcel.kodcounter.domain.Project;
 
 public class NavigationPanel extends JPanel {
 

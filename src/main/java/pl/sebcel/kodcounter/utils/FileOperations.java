@@ -1,10 +1,12 @@
-package pl.sebcel.kodcounter;
+package pl.sebcel.kodcounter.utils;
 
 import java.io.File;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+
+import pl.sebcel.kodcounter.domain.Project;
 
 public class FileOperations {
 

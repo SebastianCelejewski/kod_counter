@@ -4,6 +4,14 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.File;
 
+import pl.sebcel.kodcounter.domain.Project;
+import pl.sebcel.kodcounter.gui.DataPanel;
+import pl.sebcel.kodcounter.gui.FrameDisplay;
+import pl.sebcel.kodcounter.gui.MainFrame;
+import pl.sebcel.kodcounter.gui.MainMenu;
+import pl.sebcel.kodcounter.gui.NavigationPanel;
+import pl.sebcel.kodcounter.utils.FileOperations;
+
 public class Controller {
 
     private Project project;
@@ -41,19 +49,10 @@ public class Controller {
         File directory = new File(directoryPath);
         File[] files = directory.listFiles();
 
-        frameDisplay.setFiles(files);
-        frameDisplay.setFrameIdx(0);
-        navigationPanel.setNumberOfFrames(files.length);
         project = new Project();
         project.setImagesDirectory(directoryPath);
-        dataPanel.setProject(project);
-        navigationPanel.setProject(project);
 
-        mainFrame.repaint();
-    }
-
-    public void saveProject(File file) {
-        fileOperations.saveProject(file, project);
+        initializeGUI(files);
     }
 
     public void openProject(File file) {
@@ -62,18 +61,25 @@ public class Controller {
         File directory = new File(project.getImagesDirectory());
         File[] files = directory.listFiles();
 
-        frameDisplay.setFiles(files);
-        frameDisplay.setFrameIdx(0);
-        navigationPanel.setNumberOfFrames(files.length);
+        initializeGUI(files);
+    }
 
-        dataPanel.setProject(project);
-        navigationPanel.setProject(project);
-
-        mainFrame.repaint();
+    public void saveProject(File file) {
+        fileOperations.saveProject(file, project);
     }
 
     public void setFrameIdx(int frameIdx) {
         frameDisplay.setFrameIdx(frameIdx);
         dataPanel.setFrameIdx(frameIdx);
+    }
+
+    private void initializeGUI(File[] files) {
+        frameDisplay.setFiles(files);
+        frameDisplay.setFrameIdx(0);
+        navigationPanel.setNumberOfFrames(files.length);
+        dataPanel.setProject(project);
+        navigationPanel.setProject(project);
+
+        mainFrame.repaint();
     }
 }

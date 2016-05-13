@@ -1,4 +1,4 @@
-package pl.sebcel.kodcounter;
+package pl.sebcel.kodcounter.gui;
 
 import java.io.File;
 
@@ -6,6 +6,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import pl.sebcel.kodcounter.Controller;
 
 public class MainMenu extends JMenuBar {
 
