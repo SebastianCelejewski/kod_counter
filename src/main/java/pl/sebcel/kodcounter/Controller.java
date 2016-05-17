@@ -70,11 +70,12 @@ public class Controller {
     }
 
     private void initializeGUI(File[] files) {
-        frameDisplay.setFiles(files);
-        frameDisplay.setFrameIdx(0);
         navigationPanel.setNumberOfFrames(files.length);
         dataPanel.setProject(project);
         navigationPanel.setProject(project);
+        frameDisplay.setProject(project);
+        frameDisplay.setFiles(files);
+        frameDisplay.setFrameIdx(0);
 
         mainFrame.repaint();
     }

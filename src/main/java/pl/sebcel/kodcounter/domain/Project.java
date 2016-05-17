@@ -23,6 +23,12 @@ public class Project {
     private Integer endFrameIdx;
 
     @XmlElement
+    private ReferencePlaneAnchor referencePlaneStartPoint;
+
+    @XmlElement
+    private ReferencePlaneAnchor referencePlaneEndPoint;
+
+    @XmlElement
     private Map<Integer, FrameData> frameData = new HashMap<Integer, FrameData>();
 
     public String getImagesDirectory() {
@@ -59,5 +65,21 @@ public class Project {
 
     public Set<Integer> getFrameDataIdxs() {
         return frameData.keySet();
+    }
+
+    public ReferencePlaneAnchor getReferencePlaneStartPoint() {
+        return referencePlaneStartPoint;
+    }
+
+    public void setReferencePlaneStartPoint(ReferencePlaneAnchor referencePlaneStartPoint) {
+        this.referencePlaneStartPoint = referencePlaneStartPoint;
+    }
+
+    public ReferencePlaneAnchor getReferencePlaneEndPoint() {
+        return referencePlaneEndPoint;
+    }
+
+    public void setReferencePlaneEndPoint(ReferencePlaneAnchor referencePlaneEndPoint) {
+        this.referencePlaneEndPoint = referencePlaneEndPoint;
     }
 }

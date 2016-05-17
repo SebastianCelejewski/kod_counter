@@ -4,11 +4,11 @@ public class FrameData {
 
     private int numberOfDenotedPeople;
 
-    public int getPeopleFlow() {
+    public int getNumberOfDenotedPeople() {
         return numberOfDenotedPeople;
     }
 
-    public void setPeopleFlow(int numberOfDenotedPeople) {
+    public void setNumberOfDenotedPeople(int numberOfDenotedPeople) {
         this.numberOfDenotedPeople = numberOfDenotedPeople;
     }
 }

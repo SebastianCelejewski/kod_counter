@@ -49,7 +49,8 @@ public class DataPanel extends JPanel implements NavigationListener {
                     try {
                         int peopleFlow = Integer.parseInt(numberOfDenotedPeopleTextField.getText());
                         numberOfDenotedPeopleTextField.setBackground(Color.WHITE);
-                        setPeopleFlow(peopleFlow);
+                        setNumberOfPeople(peopleFlow);
+                        refreshView();
                     } catch (Exception ex) {
                         numberOfDenotedPeopleTextField.setBackground(Color.RED);
                     }
@@ -82,7 +83,7 @@ public class DataPanel extends JPanel implements NavigationListener {
         FrameData frameData = project.getFrameData(currentFrameIdx);
         numberOfDenotedPeopleTextField.setBackground(Color.WHITE);
         if (frameData != null) {
-            numberOfDenotedPeopleTextField.setText(Integer.toString(frameData.getPeopleFlow()));
+            numberOfDenotedPeopleTextField.setText(Integer.toString(frameData.getNumberOfDenotedPeople()));
         } else {
             numberOfDenotedPeopleTextField.setText("");
         }
@@ -98,7 +99,7 @@ public class DataPanel extends JPanel implements NavigationListener {
                 if (frameIdx >= startFrameIdx && frameIdx < endFrameIdx) {
                     frameData = project.getFrameData(frameIdx);
                     dataFrames += 1;
-                    totalPeopleFlow += frameData.getPeopleFlow();
+                    totalPeopleFlow += frameData.getNumberOfDenotedPeople();
                 }
             }
 
@@ -112,14 +113,13 @@ public class DataPanel extends JPanel implements NavigationListener {
         }
     }
 
-    private void setPeopleFlow(int peopleFlow) {
+    private void setNumberOfPeople(int numberOfPeople) {
         FrameData frameData = project.getFrameData(currentFrameIdx);
         if (frameData == null) {
             frameData = new FrameData();
             project.addFrameData(currentFrameIdx, frameData);
         }
 
-        frameData.setPeopleFlow(peopleFlow);
-        refreshView();
+        frameData.setNumberOfDenotedPeople(numberOfPeople);
     }
 }
