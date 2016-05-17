@@ -6,6 +6,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import pl.sebcel.kodcounter.Controller;
 
@@ -48,8 +49,13 @@ public class MainMenu extends JMenuBar {
         fileChooser.setDialogTitle("Select directory containing set of images");
         if (fileChooser.showDialog(MainMenu.this, "Select images directory") == JFileChooser.APPROVE_OPTION) {
             String selectedDirectory = fileChooser.getSelectedFile().getAbsolutePath();
-            controller.initProject(selectedDirectory);
-            projectFilename = null;
+            try {
+                controller.initProject(selectedDirectory);
+                projectFilename = null;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error while creating new project", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -57,8 +63,13 @@ public class MainMenu extends JMenuBar {
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(MainMenu.this) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            projectFilename = file.getAbsolutePath();
-            controller.saveProject(file);
+            try {
+                controller.saveProject(file);
+                projectFilename = file.getAbsolutePath();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error while saving a file", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
@@ -66,14 +77,24 @@ public class MainMenu extends JMenuBar {
         if (projectFilename == null) {
             saveProjectAs();
         } else {
-            controller.saveProject(new File(projectFilename));
+            try {
+                controller.saveProject(new File(projectFilename));
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error while saving a file", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }
 
     private void openProject() {
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showOpenDialog(MainMenu.this) == JFileChooser.APPROVE_OPTION) {
-            controller.openProject(fileChooser.getSelectedFile());
+            try {
+                controller.openProject(fileChooser.getSelectedFile());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Error while loading a file", JOptionPane.ERROR_MESSAGE);
+            }
             projectFilename = fileChooser.getSelectedFile().getAbsolutePath();
         }
     }
